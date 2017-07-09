@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+//We will query random.org for data and store in a local InfluxDB database
+
 func main() {
 	max, _ := strconv.Atoi(os.Args[1])
 	targetPage := os.Args[2]
