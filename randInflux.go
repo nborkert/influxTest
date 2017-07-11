@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"time"
+	//"time"
 )
 
 //We will query random.org for data and store in a local InfluxDB database
@@ -15,22 +15,27 @@ func main() {
 	targetPage := os.Args[2]
 
 
-
+	responseCode := ""
 	for count := 0; count != max; count++ {
-		GetHTTPCode(targetPage, count)
+		responseCode = GetHTTPCode(targetPage)
+		fmt.Printf("%v\n", responseCode)
 	}
 }
 
-func GetHTTPCode(u string, num int) {
-	t := time.Now()
+func GetHTTPCode(u string) string {
+	//t := time.Now()
 	res, err := http.Get(u)
-	t2 := time.Now()
+	//t2 := time.Now()
 
-	if err != nil {
-		fmt.Printf("%v,"+err.Error()+",%v\n", num, t2.Sub(t))
-	}
+	/*if err != nil {
+		fmt.Printf(err.Error()+",%v\n", t2.Sub(t))
+		return ""
+	} */
 	if err == nil {
 		defer res.Body.Close()
-		fmt.Printf("%v,"+res.Status+",%v\n", num, t2.Sub(t))
+		//fmt.Printf(res.Status+",%v\n", t2.Sub(t))
+		return res.Status
+	} else {
+		return ""
 	}
 }
